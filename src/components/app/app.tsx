@@ -18,93 +18,118 @@ import {
   OrderInfo,
   ProtectedRoute
 } from '@components';
-import { Routes, Route, RouterProvider } from 'react-router-dom';
+import { Routes, Route, RouterProvider, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useDispatch } from '../../services/store';
+import { fetchIngredients } from '../../services/slices/ingredientsSlice';
+import { fetchFeedOrders } from '../../services/slices/feedSlice';
 
-const App = () => (
-  <div className={styles.app}>
-    <AppHeader />
-    <Routes>
-      <Route path='/' element={<ConstructorPage />} />
-      <Route path='/feed' element={<Feed />}>
+export const App = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(fetchIngredients());
+    dispatch(fetchFeedOrders());
+  }, []);
+  return (
+    <div className={styles.app}>
+      <AppHeader />
+      <Routes>
+        <Route path='/' element={<ConstructorPage />} />
+        <Route path='/feed' element={<Feed />} />
         <Route
-          path=':number'
+          path='/feed/:number'
           element={
-            <Modal title='' onClose={() => {}}>
+            <Modal
+              title=''
+              onClose={() => {
+                navigate('/feed');
+              }}
+            >
               <OrderInfo />
             </Modal>
           }
         />
-      </Route>
-      <Route
-        path='/ingredients/:id'
-        element={
-          <Modal title='' onClose={() => {}}>
-            <IngredientDetails />
-          </Modal>
-        }
-      />
-      <Route
-        path='/login'
-        element={
-          <ProtectedRoute>
-            <Login />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path='/register'
-        element={
-          <ProtectedRoute>
-            <Register />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path='/forgot-password'
-        element={
-          <ProtectedRoute>
-            <ForgotPassword />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path='/reset-password'
-        element={
-          <ProtectedRoute>
-            <ResetPassword />
-          </ProtectedRoute>
-        }
-      />
-      <Route path='/profile'>
         <Route
-          index
+          path='/ingredients/:id'
+          element={
+            <Modal
+              title=''
+              onClose={() => {
+                navigate('/');
+              }}
+            >
+              <IngredientDetails />
+            </Modal>
+          }
+        />
+        <Route
+          path='/login'
           element={
             <ProtectedRoute>
-              <Profile />
+              <Login />
             </ProtectedRoute>
           }
         />
         <Route
-          path='orders'
+          path='/register'
           element={
             <ProtectedRoute>
-              <ProfileOrders />
+              <Register />
             </ProtectedRoute>
           }
-        >
+        />
+        <Route
+          path='/forgot-password'
+          element={
+            <ProtectedRoute>
+              <ForgotPassword />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='/reset-password'
+          element={
+            <ProtectedRoute>
+              <ResetPassword />
+            </ProtectedRoute>
+          }
+        />
+        <Route path='/profile'>
           <Route
-            path=':number'
+            index
             element={
-              <Modal title='' onClose={() => {}}>
-                <OrderInfo />
-              </Modal>
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
             }
           />
+          <Route
+            path='orders'
+            element={
+              <ProtectedRoute>
+                <ProfileOrders />
+              </ProtectedRoute>
+            }
+          >
+            <Route
+              path=':number'
+              element={
+                <Modal
+                  title=''
+                  onClose={() => {
+                    navigate('/profile/orders');
+                  }}
+                >
+                  <OrderInfo />
+                </Modal>
+              }
+            />
+          </Route>
         </Route>
-      </Route>
-      <Route path='*' element={<NotFound404 />} />
-    </Routes>
-  </div>
-);
-
-export default App;
+        <Route path='*' element={<NotFound404 />} />
+      </Routes>
+    </div>
+  );
+};

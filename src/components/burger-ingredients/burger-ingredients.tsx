@@ -5,16 +5,18 @@ import { useSelector } from '../../services/store';
 
 import { TIngredient, TTabMode } from '@utils-types';
 import { BurgerIngredientsUI } from '../ui/burger-ingredients';
-import {
-  selectBuns,
-  selectMains,
-  selectSauces
-} from '../../services/slices/ingredientsSlice';
+import { selectIngredients } from '../../services/slices/ingredientsSlice';
+
+const getIngredients = (
+  ingredients: TIngredient[],
+  type: string
+): TIngredient[] => ingredients.filter((item) => item.type === type);
 
 export const BurgerIngredients: FC = () => {
-  const buns = useSelector<TIngredient[]>(selectBuns);
-  const mains = useSelector<TIngredient[]>(selectMains);
-  const sauces = useSelector<TIngredient[]>(selectSauces);
+  const ingredients = useSelector<TIngredient[]>(selectIngredients);
+  const buns = getIngredients(ingredients, 'bun');
+  const mains = getIngredients(ingredients, 'main');
+  const sauces = getIngredients(ingredients, 'sauce');
 
   const [currentTab, setCurrentTab] = useState<TTabMode>('bun');
   const titleBunRef = useRef<HTMLHeadingElement>(null);

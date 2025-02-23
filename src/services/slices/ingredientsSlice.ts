@@ -1,19 +1,16 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { getIngredientsApi } from '@api';
 import { TIngredient } from '@utils-types';
+import { act } from 'react-dom/test-utils';
 
 interface IngredientsState {
-  buns: TIngredient[];
-  mains: TIngredient[];
-  sauces: TIngredient[];
+  ingredients: TIngredient[];
   loading: boolean;
   error: string | null | undefined;
 }
 
 const initialState: IngredientsState = {
-  buns: [],
-  mains: [],
-  sauces: [],
+  ingredients: [],
   loading: false,
   error: null
 };
@@ -31,10 +28,7 @@ const ingredientsSlice = createSlice({
   initialState,
   reducers: {},
   selectors: {
-    //getIngredientsSelector: (state) => state,
-    selectBuns: (state) => state.buns,
-    selectMains: (state) => state.mains,
-    selectSauces: (state) => state.sauces,
+    selectIngredients: (state) => state.ingredients,
     selectIsLoading: (state) => state.loading
   },
   extraReducers: (builder) => {
@@ -49,29 +43,12 @@ const ingredientsSlice = createSlice({
       })
       .addCase(fetchIngredients.fulfilled, (state, action) => {
         state.loading = false;
-        state.buns = [];
-        state.mains = [];
-        state.sauces = [];
-        action.payload.forEach((ingredient) => {
-          switch (ingredient.type) {
-            case 'bun':
-              state.buns.push(ingredient);
-              break;
-            case 'main':
-              state.mains.push(ingredient);
-              break;
-            case 'sauce':
-              state.sauces.push(ingredient);
-              break;
-            default:
-              break;
-          }
-        });
+        state.ingredients = action.payload;
       });
   }
 });
 
-export const { selectBuns, selectMains, selectSauces, selectIsLoading } =
+export const { selectIngredients, selectIsLoading } =
   ingredientsSlice.selectors;
 
 export default ingredientsSlice.reducer;
