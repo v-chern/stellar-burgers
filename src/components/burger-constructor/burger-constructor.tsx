@@ -1,24 +1,34 @@
 import { FC, useMemo } from 'react';
 import { TConstructorIngredient } from '@utils-types';
 import { BurgerConstructorUI } from '@ui';
+import { useSelector } from '../../services/store';
+import {
+  selectBun,
+  selectIngedients,
+  selectRequest,
+  selectOrder
+} from '../../services/slices/userOrderSlice';
 
 export const BurgerConstructor: FC = () => {
-  /** TODO: взять переменные constructorItems, orderRequest и orderModalData из стора */
+  /** DONE: взять переменные constructorItems, orderRequest и orderModalData из стора*/
   const constructorItems = {
-    bun: {
-      price: 0
-    },
-    ingredients: []
+    bun: useSelector(selectBun),
+    ingredients: useSelector(selectIngedients)
   };
+  const orderRequest = useSelector(selectRequest);
 
-  const orderRequest = false;
-
-  const orderModalData = null;
+  const orderModalData = useSelector(selectOrder);
 
   const onOrderClick = () => {
+    //TODO: тут реализовать отправку заказа
+    console.log('order click');
     if (!constructorItems.bun || orderRequest) return;
   };
-  const closeOrderModal = () => {};
+
+  const closeOrderModal = () => {
+    //TODO: тут что то должно быть
+    console.log('order modal close');
+  };
 
   const price = useMemo(
     () =>
