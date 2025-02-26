@@ -1,12 +1,13 @@
 import { FC, useMemo } from 'react';
 import { TConstructorIngredient } from '@utils-types';
 import { BurgerConstructorUI } from '@ui';
-import { useSelector } from '../../services/store';
+import { useSelector, useDispatch } from '../../services/store';
 import {
   selectBun,
   selectIngedients,
   selectRequest,
-  selectOrder
+  selectOrder,
+  placeOrder
 } from '../../services/slices/userOrderSlice';
 
 export const BurgerConstructor: FC = () => {
@@ -19,10 +20,13 @@ export const BurgerConstructor: FC = () => {
 
   const orderModalData = useSelector(selectOrder);
 
+  const dispatch = useDispatch();
+
   const onOrderClick = () => {
     //TODO: тут реализовать отправку заказа
     console.log('order click');
     if (!constructorItems.bun || orderRequest) return;
+    dispatch(placeOrder(constructorItems.ingredients));
   };
 
   const closeOrderModal = () => {

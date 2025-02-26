@@ -10,7 +10,7 @@ const swapIngredients = (
   b: TConstructorIngredient
 ) => {};
 
-interface userOrderState {
+interface UserOrderState {
   bun: TConstructorIngredient | null;
   ingredients: TConstructorIngredient[];
   request: boolean;
@@ -18,13 +18,22 @@ interface userOrderState {
   error: string | null;
 }
 
-const initialState: userOrderState = {
+const initialState: UserOrderState = {
   bun: null,
   ingredients: [],
   request: false,
   order: null,
   error: null
 };
+
+export const placeOrder = createAsyncThunk(
+  'orders/placeOrder',
+  async (ingredients: TConstructorIngredient[]) => {
+    const data = ingredients.map((item) => item._id);
+    const res = await orderBurgerApi(data);
+    return res;
+  }
+);
 
 const userOrderSlice = createSlice({
   name: 'userOrder',
@@ -65,6 +74,14 @@ const userOrderSlice = createSlice({
           state.ingredients[idx]
         ];
       }
+    },
+    removeIngredient: (
+      state,
+      action: PayloadAction<TConstructorIngredient>
+    ) => {
+      state.ingredients = state.ingredients.filter(
+        (item: TConstructorIngredient) => item.id != action.payload.id
+      );
     }
   },
   selectors: {
@@ -72,11 +89,29 @@ const userOrderSlice = createSlice({
     selectBun: (state) => state.bun,
     selectRequest: (state) => state.request,
     selectOrder: (state) => state.order
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(placeOrder.pending, (state) => {
+        state.request = true;
+      })
+      .addCase(placeOrder.rejected, (state, action) => {
+        state.request = false;
+        console.log(action);
+      })
+      .addCase(placeOrder.fulfilled, (state, action) => {
+        state.request = false;
+        console.log(action);
+      });
   }
 });
 
-export const { addIngredient, moveIngredientUp, moveIngredientDown } =
-  userOrderSlice.actions;
+export const {
+  addIngredient,
+  moveIngredientUp,
+  moveIngredientDown,
+  removeIngredient
+} = userOrderSlice.actions;
 export const { selectIngedients, selectBun, selectRequest, selectOrder } =
   userOrderSlice.selectors;
 
