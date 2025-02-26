@@ -5,11 +5,6 @@ import { orderBurgerApi } from '../../utils/burger-api';
 import { TConstructorIngredient, TIngredient, TOrder } from '@utils-types';
 import { nanoid } from '@reduxjs/toolkit';
 
-const swapIngredients = (
-  a: TConstructorIngredient,
-  b: TConstructorIngredient
-) => {};
-
 interface UserOrderState {
   bun: TConstructorIngredient | null;
   ingredients: TConstructorIngredient[];
