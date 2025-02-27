@@ -23,7 +23,7 @@ export const BurgerConstructor: FC = () => {
   const dispatch = useDispatch();
 
   const onOrderClick = () => {
-    //TODO: тут реализовать отправку заказа
+    //TODO: тут проверка авторизации и отправка заказа
     console.log('order click');
     if (!constructorItems.bun || orderRequest) return;
     dispatch(placeOrder(constructorItems.ingredients));
