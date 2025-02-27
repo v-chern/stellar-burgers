@@ -91,7 +91,7 @@ export const App = () => {
         <Route
           path='/reset-password'
           element={
-            <ProtectedRoute>
+            <ProtectedRoute onlyUnAuth>
               <ResetPassword />
             </ProtectedRoute>
           }
@@ -112,21 +112,20 @@ export const App = () => {
                 <ProfileOrders />
               </ProtectedRoute>
             }
-          >
-            <Route
-              path=':number'
-              element={
-                <Modal
-                  title=''
-                  onClose={() => {
-                    navigate('/profile/orders');
-                  }}
-                >
-                  <OrderInfo />
-                </Modal>
-              }
-            />
-          </Route>
+          />
+          <Route
+            path='orders/:number'
+            element={
+              <Modal
+                title=''
+                onClose={() => {
+                  navigate('/profile/orders');
+                }}
+              >
+                <OrderInfo />
+              </Modal>
+            }
+          />
         </Route>
         <Route path='*' element={<NotFound404 />} />
       </Routes>

@@ -8,7 +8,7 @@ import { selectFeedOrders } from '../../services/slices/feedSlice';
 import { selectIngredients } from '../../services/slices/ingredientsSlice';
 
 export const OrderInfo: FC = () => {
-  /** TODO: взять переменные orderData и ingredients из стора */
+  /** DONE: взять переменные orderData и ingredients из стора */
   const orderNumber = Number(useParams().number);
 
   const orderData = useSelector(selectFeedOrders).find(

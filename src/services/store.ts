@@ -8,13 +8,11 @@ import {
 
 import ingredientsReducer from './slices/ingredientsSlice';
 import userOrderReducer from './slices/userOrderSlice';
-import ordersReducer from './slices/ordersSlice';
 import feedReducer from './slices/feedSlice';
 import userReducer from './slices/userSlice';
 
 const rootReducer = combineReducers({
   ingredients: ingredientsReducer,
-  orders: ordersReducer,
   feed: feedReducer,
   user: userReducer,
   userOrder: userOrderReducer

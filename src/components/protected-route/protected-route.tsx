@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { Preloader } from '@ui';
-import { useSelector } from '../../services/store';
+import { useSelector, useDispatch } from '../../services/store';
 import {
-  selectUser,
   selectIsLoading,
-  selectIsAuthenticated
+  selectIsAuthenticated,
+  getUser
 } from '../../services/slices/userSlice';
 
 type ProtectedRouteProps = {
@@ -21,12 +21,20 @@ export const ProtectedRoute = ({
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const location = useLocation();
 
+  const dispatch = useDispatch();
+
+  //Проверяем, есть ли валидный токен в localStorage и Cookie
+  useEffect(() => {
+    dispatch(getUser());
+  }, []);
+
   if (isAuthLoading) {
+    console.log('auth loading');
     return <Preloader />;
   }
 
   if (!onlyUnAuth && !isAuthenticated) {
-    return <Navigate replace to='/login' />;
+    return <Navigate replace to='/login' state={{ from: location }} />;
   }
 
   if (onlyUnAuth && isAuthenticated) {
