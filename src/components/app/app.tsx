@@ -23,6 +23,7 @@ import { useEffect } from 'react';
 import { useDispatch } from '../../services/store';
 import { fetchIngredients } from '../../services/slices/ingredientsSlice';
 import { fetchFeedOrders } from '../../services/slices/feedSlice';
+import { getUser } from '../../services/slices/userSlice';
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -31,6 +32,7 @@ export const App = () => {
   useEffect(() => {
     dispatch(fetchIngredients());
     dispatch(fetchFeedOrders());
+    dispatch(getUser());
   }, []);
   return (
     <div className={styles.app}>
@@ -42,7 +44,7 @@ export const App = () => {
           path='/feed/:number'
           element={
             <Modal
-              title=''
+              title='Обзор заказа'
               onClose={() => {
                 navigate('/feed');
               }}
@@ -55,7 +57,7 @@ export const App = () => {
           path='/ingredients/:id'
           element={
             <Modal
-              title=''
+              title='Детали ингредиента'
               onClose={() => {
                 navigate('/');
               }}
@@ -117,7 +119,7 @@ export const App = () => {
             path='orders/:number'
             element={
               <Modal
-                title=''
+                title='Обзор заказа'
                 onClose={() => {
                   navigate('/profile/orders');
                 }}

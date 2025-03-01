@@ -7,8 +7,11 @@ import {
   selectIngedients,
   selectRequest,
   selectOrder,
+  clearUserOrder,
   placeOrder
 } from '../../services/slices/userOrderSlice';
+import { selectIsAuthenticated } from '../../services/slices/userSlice';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 export const BurgerConstructor: FC = () => {
   /** DONE: взять переменные constructorItems, orderRequest и orderModalData из стора*/
@@ -20,17 +23,26 @@ export const BurgerConstructor: FC = () => {
 
   const orderModalData = useSelector(selectOrder);
 
+  const userAuthenticated = useSelector(selectIsAuthenticated);
+
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const onOrderClick = () => {
-    //TODO: тут проверка авторизации и отправка заказа
+    //Проверка авторизации и отправка заказа
     console.log('order click');
     if (!constructorItems.bun || orderRequest) return;
-    dispatch(placeOrder(constructorItems.ingredients));
+    if (!userAuthenticated) {
+      navigate('/login', { state: { from: location } });
+    } else {
+      dispatch(placeOrder(constructorItems.ingredients));
+    }
   };
 
   const closeOrderModal = () => {
-    //TODO: тут что то должно быть
+    //Очиста данных заказа
+    dispatch(clearUserOrder());
     console.log('order modal close');
   };
 

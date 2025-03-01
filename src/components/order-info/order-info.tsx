@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectFeedOrders } from '../../services/slices/feedSlice';
 import { selectIngredients } from '../../services/slices/ingredientsSlice';
+import { selectUserOrders } from '../../services/slices/userSlice';
 
 export const OrderInfo: FC = () => {
   /** DONE: взять переменные orderData и ingredients из стора */

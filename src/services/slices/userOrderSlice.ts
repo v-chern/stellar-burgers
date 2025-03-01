@@ -77,6 +77,11 @@ const userOrderSlice = createSlice({
       state.ingredients = state.ingredients.filter(
         (item: TConstructorIngredient) => item.id != action.payload.id
       );
+    },
+    clearUserOrder: (state) => {
+      state.order = null;
+      state.ingredients = [];
+      state.bun = null;
     }
   },
   selectors: {
@@ -96,6 +101,9 @@ const userOrderSlice = createSlice({
       })
       .addCase(placeOrder.fulfilled, (state, action) => {
         state.request = false;
+        state.ingredients = [];
+        state.bun = null;
+        state.order = action.payload.order;
         console.log(action);
       });
   }
@@ -105,7 +113,8 @@ export const {
   addIngredient,
   moveIngredientUp,
   moveIngredientDown,
-  removeIngredient
+  removeIngredient,
+  clearUserOrder
 } = userOrderSlice.actions;
 export const { selectIngedients, selectBun, selectRequest, selectOrder } =
   userOrderSlice.selectors;

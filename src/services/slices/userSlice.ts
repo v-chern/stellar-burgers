@@ -10,11 +10,11 @@ import {
   getOrdersApi
 } from '@api';
 import { TOrder, TUser } from '@utils-types';
-import { getCookie, setCookie } from '../../utils/cookie';
+import { setCookie } from '../../utils/cookie';
 
 interface UserState {
   user: TUser;
-  orders: TOrder[];
+  orders: TOrder[] | null;
   isAuthenticated: boolean;
   isLoading: boolean;
   error: string | null | undefined;
@@ -25,7 +25,7 @@ const initialState: UserState = {
     name: '',
     email: ''
   },
-  orders: [],
+  orders: null,
   isAuthenticated: false,
   isLoading: false,
   error: null
@@ -33,7 +33,7 @@ const initialState: UserState = {
 
 export const loginUser = createAsyncThunk(
   'users/login',
-  async (data: TLoginData, { rejectWithValue }) => {
+  async (data: TLoginData) => {
     const res = await loginUserApi(data);
     console.log('Login response', res);
     return res;
@@ -79,13 +79,17 @@ export const getUserOrders = createAsyncThunk('users/orders', async () => {
 const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    clearUserOrders: (state) => {
+      state.orders = null;
+    }
+  },
   selectors: {
     selectUser: (state) => state.user,
     selectIsLoading: (state) => state.isLoading,
     selectIsAuthenticated: (state) => state.isAuthenticated,
     selectError: (state) => state.error || '',
-    selectOrders: (state) => state.orders
+    selectUserOrders: (state) => state.orders
   },
   extraReducers: (builder) => {
     builder
@@ -195,11 +199,14 @@ const userSlice = createSlice({
   }
 });
 
+export const { clearUserOrders } = userSlice.actions;
+
 export const {
   selectUser,
   selectError,
   selectIsAuthenticated,
   selectIsLoading,
-  selectOrders
+  selectUserOrders
 } = userSlice.selectors;
+
 export default userSlice.reducer;
