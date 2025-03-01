@@ -1,9 +1,10 @@
-//TODO: реализовать слайс с сохранением заказа из констуктора и отправкой
-//проверить стурктуру данных
+//Cлайс с данными заказа из конструктора
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { orderBurgerApi } from '../../utils/burger-api';
 import { TConstructorIngredient, TIngredient, TOrder } from '@utils-types';
 import { nanoid } from '@reduxjs/toolkit';
+
+import { fetchFeedOrders } from './feedSlice';
 
 interface UserOrderState {
   bun: TConstructorIngredient | null;
@@ -23,9 +24,12 @@ const initialState: UserOrderState = {
 
 export const placeOrder = createAsyncThunk(
   'orders/placeOrder',
-  async (ingredients: TConstructorIngredient[]) => {
+  async (ingredients: TConstructorIngredient[], { dispatch }) => {
     const data = ingredients.map((item) => item._id);
     const res = await orderBurgerApi(data);
+    if (res.success) {
+      dispatch(fetchFeedOrders());
+    }
     return res;
   }
 );
@@ -97,14 +101,12 @@ const userOrderSlice = createSlice({
       })
       .addCase(placeOrder.rejected, (state, action) => {
         state.request = false;
-        console.log(action);
       })
       .addCase(placeOrder.fulfilled, (state, action) => {
         state.request = false;
         state.ingredients = [];
         state.bun = null;
         state.order = action.payload.order;
-        console.log(action);
       });
   }
 });

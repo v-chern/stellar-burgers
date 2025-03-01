@@ -29,7 +29,6 @@ export const Profile: FC = () => {
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    console.log('profile submit');
     const data = formValue.password
       ? formValue
       : {

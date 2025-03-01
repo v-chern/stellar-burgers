@@ -29,7 +29,6 @@ export const ProtectedRoute = ({
   }, []);
 
   if (isAuthLoading) {
-    console.log('auth loading');
     return <Preloader />;
   }
 
@@ -38,7 +37,7 @@ export const ProtectedRoute = ({
   }
 
   if (onlyUnAuth && isAuthenticated) {
-    const from = location.state?.from || { pathname: '' };
+    const from = location.state?.from || { pathname: '/' };
     return <Navigate replace to={from} />;
   }
 

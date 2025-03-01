@@ -18,7 +18,6 @@ export const ProfileOrders: FC = () => {
     //Обновление списка заказов пользователя
     if (!orders) {
       dispatch(getUserOrders());
-      dispatch(fetchFeedOrders());
     }
     return () => {
       dispatch(clearUserOrders());

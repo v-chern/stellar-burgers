@@ -31,7 +31,6 @@ export const BurgerConstructor: FC = () => {
 
   const onOrderClick = () => {
     //Проверка авторизации и отправка заказа
-    console.log('order click');
     if (!constructorItems.bun || orderRequest) return;
     if (!userAuthenticated) {
       navigate('/login', { state: { from: location } });
@@ -43,7 +42,6 @@ export const BurgerConstructor: FC = () => {
   const closeOrderModal = () => {
     //Очиста данных заказа
     dispatch(clearUserOrder());
-    console.log('order modal close');
   };
 
   const price = useMemo(
