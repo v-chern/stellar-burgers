@@ -1,20 +1,30 @@
-import { FC, useMemo } from 'react';
+import { FC, useEffect, useMemo } from 'react';
 import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient } from '@utils-types';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { selectFeedOrders } from '../../services/slices/feedSlice';
+import { useSelector, useDispatch } from '../../services/store';
+import {
+  selectFeedOrders,
+  fetchFeedOrders
+} from '../../services/slices/feedSlice';
 import { selectIngredients } from '../../services/slices/ingredientsSlice';
-import { selectUserOrders } from '../../services/slices/userSlice';
 
 export const OrderInfo: FC = () => {
   /** DONE: взять переменные orderData и ingredients из стора */
   const orderNumber = Number(useParams().number);
+  const dispatch = useDispatch();
 
   const orderData = useSelector(selectFeedOrders).find(
     (order) => order.number === orderNumber
   );
+
+  //Если заказа нет в store, актулизируем ленту
+  useEffect(() => {
+    if (!orderData) {
+      dispatch(fetchFeedOrders());
+    }
+  });
 
   const ingredients: TIngredient[] = useSelector(selectIngredients);
 

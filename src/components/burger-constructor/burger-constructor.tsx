@@ -35,7 +35,11 @@ export const BurgerConstructor: FC = () => {
     if (!userAuthenticated) {
       navigate('/login', { state: { from: location } });
     } else {
-      dispatch(placeOrder(constructorItems.ingredients));
+      const orderIngredients = [
+        constructorItems.bun,
+        constructorItems.bun
+      ].concat(constructorItems.ingredients);
+      dispatch(placeOrder(orderIngredients));
     }
   };
 
