@@ -204,6 +204,21 @@ const config: JestConfigWithTsJest = {
         // настройки для ts-jest
       },
     ],
+  },
+  moduleNameMapper: {
+    "\\.(gif|ttf|eot|svg|png)$": "<rootDir>/test/__mocks__/fileMock.js",
+    "\\.(css|less|sass|scss)$": "identity-obj-proxy",
+    "^@api$": "<rootDir>/src/utils/burger-api.ts",
+    "^@pages": "<rootDir>/src/pages",
+    "^@components": "<rootDir>/src/components",
+    "^@ui": "<rootDir>/src/components/ui",
+    "^@ui-pages": "<rootDir>/src/components/ui/pages",
+    "^@utils-types": "<rootDir>/src/utils/types",
+    "^@slices": "<rootDir>/src/services/slices",
+    "^@selectors": "<rootDir>/src/services/selectors"
+  },
+  globals: {
+      fetch: global.fetch,
   }
 };
 
