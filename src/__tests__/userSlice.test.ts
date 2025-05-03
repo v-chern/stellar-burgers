@@ -22,10 +22,10 @@ describe('check userSlice', () => {
       getItem: jest.fn(),
       setItem: jest.fn(),
       removeItem: jest.fn(),
-      clear: jest.fn(),
+      clear: jest.fn()
     };
-      Object.defineProperty(window, 'localStorage', {
-      value: localStorageMock,
+    Object.defineProperty(window, 'localStorage', {
+      value: localStorageMock
     });
   });
 
@@ -177,7 +177,7 @@ describe('check userSlice', () => {
       }
     };
     const newState = reducer(undefined, action);
-    expect(newState).toEqual({ ...initial, isLoading: false });
+    expect(newState).toEqual({ ...initial, isLoading: false, error: 'error' });
   });
 
   it('should set isLoading to false and save user on updateUser.fulfilled', () => {

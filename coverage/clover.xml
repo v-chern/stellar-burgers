@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1746279068751" clover="3.2.0">
-  <project timestamp="1746279068751" name="All files">
-    <metrics statements="757" coveredstatements="529" conditionals="41" coveredconditionals="40" methods="45" coveredmethods="9" elements="843" coveredelements="578" complexity="0" loc="757" ncloc="757" packages="3" files="7" classes="7"/>
+<coverage generated="1746279612069" clover="3.2.0">
+  <project timestamp="1746279612069" name="All files">
+    <metrics statements="758" coveredstatements="530" conditionals="41" coveredconditionals="40" methods="45" coveredmethods="9" elements="844" coveredelements="579" complexity="0" loc="758" ncloc="758" packages="3" files="7" classes="7"/>
     <package name="services">
       <metrics statements="35" coveredstatements="35" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
       <file name="store.ts" path="/Users/vladimirchernikov/GitHub/prakticum/stellar-burgers/src/services/store.ts">
@@ -44,7 +44,7 @@
       </file>
     </package>
     <package name="services.slices">
-      <metrics statements="440" coveredstatements="407" conditionals="41" coveredconditionals="40" methods="26" coveredmethods="9"/>
+      <metrics statements="441" coveredstatements="408" conditionals="41" coveredconditionals="40" methods="26" coveredmethods="9"/>
       <file name="feedSlice.ts" path="/Users/vladimirchernikov/GitHub/prakticum/stellar-burgers/src/services/slices/feedSlice.ts">
         <metrics statements="59" coveredstatements="57" conditionals="4" coveredconditionals="4" methods="5" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
@@ -297,7 +297,7 @@
         <line num="130" count="1" type="stmt"/>
       </file>
       <file name="userSlice.ts" path="/Users/vladimirchernikov/GitHub/prakticum/stellar-burgers/src/services/slices/userSlice.ts">
-        <metrics statements="198" coveredstatements="181" conditionals="19" coveredconditionals="19" methods="7" coveredmethods="1"/>
+        <metrics statements="199" coveredstatements="182" conditionals="19" coveredconditionals="19" methods="7" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -443,36 +443,36 @@
         <line num="143" count="1" type="cond" truecount="1" falsecount="0"/>
         <line num="144" count="1" type="stmt"/>
         <line num="145" count="1" type="stmt"/>
-        <line num="146" count="1" type="cond" truecount="1" falsecount="0"/>
-        <line num="147" count="1" type="stmt"/>
+        <line num="146" count="1" type="stmt"/>
+        <line num="147" count="1" type="cond" truecount="1" falsecount="0"/>
         <line num="148" count="1" type="stmt"/>
         <line num="149" count="1" type="stmt"/>
         <line num="150" count="1" type="stmt"/>
         <line num="151" count="1" type="stmt"/>
         <line num="152" count="1" type="stmt"/>
-        <line num="153" count="1" type="cond" truecount="1" falsecount="0"/>
-        <line num="154" count="1" type="stmt"/>
+        <line num="153" count="1" type="stmt"/>
+        <line num="154" count="1" type="cond" truecount="1" falsecount="0"/>
         <line num="155" count="1" type="stmt"/>
-        <line num="156" count="1" type="cond" truecount="1" falsecount="0"/>
-        <line num="157" count="1" type="stmt"/>
+        <line num="156" count="1" type="stmt"/>
+        <line num="157" count="1" type="cond" truecount="1" falsecount="0"/>
         <line num="158" count="1" type="stmt"/>
         <line num="159" count="1" type="stmt"/>
-        <line num="160" count="1" type="cond" truecount="1" falsecount="0"/>
-        <line num="161" count="1" type="stmt"/>
+        <line num="160" count="1" type="stmt"/>
+        <line num="161" count="1" type="cond" truecount="1" falsecount="0"/>
         <line num="162" count="1" type="stmt"/>
         <line num="163" count="1" type="stmt"/>
         <line num="164" count="1" type="stmt"/>
         <line num="165" count="1" type="stmt"/>
-        <line num="166" count="1" type="cond" truecount="1" falsecount="0"/>
-        <line num="167" count="1" type="stmt"/>
+        <line num="166" count="1" type="stmt"/>
+        <line num="167" count="1" type="cond" truecount="1" falsecount="0"/>
         <line num="168" count="1" type="stmt"/>
-        <line num="169" count="1" type="cond" truecount="1" falsecount="0"/>
-        <line num="170" count="1" type="stmt"/>
+        <line num="169" count="1" type="stmt"/>
+        <line num="170" count="1" type="cond" truecount="1" falsecount="0"/>
         <line num="171" count="1" type="stmt"/>
         <line num="172" count="1" type="stmt"/>
         <line num="173" count="1" type="stmt"/>
-        <line num="174" count="1" type="cond" truecount="1" falsecount="0"/>
-        <line num="175" count="1" type="stmt"/>
+        <line num="174" count="1" type="stmt"/>
+        <line num="175" count="1" type="cond" truecount="1" falsecount="0"/>
         <line num="176" count="1" type="stmt"/>
         <line num="177" count="1" type="stmt"/>
         <line num="178" count="1" type="stmt"/>
@@ -496,6 +496,7 @@
         <line num="196" count="1" type="stmt"/>
         <line num="197" count="1" type="stmt"/>
         <line num="198" count="1" type="stmt"/>
+        <line num="199" count="1" type="stmt"/>
       </file>
     </package>
     <package name="utils">
