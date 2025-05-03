@@ -14,6 +14,11 @@ describe('check constructor page', function() {
         cy.wait('@getUser');
     });
 
+    afterEach(() => {
+        cy.clearCookie('accessToken');
+        window.localStorage.removeItem('refreshToken');
+    });
+
     it('should show bun details modal', function() {
         cy.get('[data-testid="ingredient-card_bun"]').first().click();
         cy.get('[data-testid="ingredient-name"]').should('have.text', 'Булка');

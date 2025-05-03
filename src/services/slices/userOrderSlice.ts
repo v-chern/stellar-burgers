@@ -106,6 +106,7 @@ const userOrderSlice = createSlice({
       })
       .addCase(placeOrder.rejected, (state, action) => {
         state.request = false;
+        state.error = action.error.message || 'Unknown';
       })
       .addCase(placeOrder.fulfilled, (state, action) => {
         state.request = false;

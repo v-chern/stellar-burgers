@@ -5,7 +5,8 @@ import reducer, {
   moveIngredientUp,
   moveIngredientDown,
   removeIngredient,
-  clearUserOrder
+  clearUserOrder,
+  placeOrder
 } from '../services/slices/userOrderSlice';
 
 import { TIngredient, TConstructorIngredient } from '@utils-types';
@@ -22,6 +23,14 @@ describe('check userOrderSlice actions', () => {
   afterAll(() => {
     jest.resetAllMocks();
   });
+
+  const initial = {
+    bun: null,
+    ingredients: [],
+    request: false,
+    order: null,
+    error: null
+  };
 
   const bun = {
     _id: '0',
@@ -65,15 +74,19 @@ describe('check userOrderSlice actions', () => {
     image_mobile: 'sauce.jpg'
   };
 
+  const userOrder = {
+    _id: '1',
+    status: 'test',
+    name: 'test',
+    createdAt: 'test',
+    updatedAt: 'test',
+    number: 1,
+    ingredients: ['test']
+  };
+
   it('should return initial state', () => {
-    const initialState = reducer(undefined, { type: '@@INIT' });
-    expect(initialState).toEqual({
-      bun: null,
-      ingredients: [],
-      request: false,
-      order: null,
-      error: null
-    });
+    const newState = reducer(undefined, { type: '@@INIT' });
+    expect(newState).toEqual(initial);
   });
 
   it('should add bun to ingredients', () => {
@@ -87,17 +100,14 @@ describe('check userOrderSlice actions', () => {
   });
 
   it('should move ingredient up', () => {
-    const initial = {
-      bun: null,
+    const state = {
+      ...initial,
       ingredients: [
         { ...meat, id: '0' },
         { ...sauce, id: '1' }
-      ],
-      request: false,
-      order: null,
-      error: null
+      ]
     };
-    const newState = reducer(initial, moveIngredientUp({ ...sauce, id: '1' }));
+    const newState = reducer(state, moveIngredientUp({ ...sauce, id: '1' }));
     expect(newState.ingredients).toEqual([
       { ...sauce, id: '1' },
       { ...meat, id: '0' }
@@ -105,20 +115,57 @@ describe('check userOrderSlice actions', () => {
   });
 
   it('should move ingredient down', () => {
-    const initial = {
-      bun: null,
+    const state = {
+      ...initial,
       ingredients: [
         { ...meat, id: '0' },
         { ...sauce, id: '1' }
-      ],
-      request: false,
-      order: null,
-      error: null
+      ]
     };
-    const newState = reducer(initial, moveIngredientDown({ ...meat, id: '0' }));
+    const newState = reducer(state, moveIngredientDown({ ...meat, id: '0' }));
     expect(newState.ingredients).toEqual([
       { ...sauce, id: '1' },
       { ...meat, id: '0' }
     ]);
+  });
+
+  it('should remove ingredient', () => {
+    const state = {
+      ...initial,
+      ingredients: [
+        { ...meat, id: '0' },
+        { ...sauce, id: '1' }
+      ]
+    };
+    const newState = reducer(state, removeIngredient({ ...meat, id: '0' }));
+    expect(newState.ingredients).toEqual([{ ...sauce, id: '1' }]);
+  });
+
+  it('should set request to true on placeOrder.pending', () => {
+    const action = { type: placeOrder.pending.type };
+    const newState = reducer(undefined, action);
+    expect(newState).toEqual({ ...initial, request: true });
+  });
+
+  it('should set request to false and save error on placeOrder.rejected', () => {
+    const action = {
+      type: placeOrder.rejected.type,
+      error: {
+        message: 'error'
+      }
+    };
+    const newState = reducer(undefined, action);
+    expect(newState).toEqual({ ...initial, request: false, error: 'error' });
+  });
+
+  it('should set request to false and save order on placeOrder.fulfilled', () => {
+    const action = {
+      type: placeOrder.fulfilled.type,
+      payload: {
+        order: userOrder
+      }
+    };
+    const newState = reducer(undefined, action);
+    expect(newState).toEqual({ ...initial, request: false, order: userOrder });
   });
 });
