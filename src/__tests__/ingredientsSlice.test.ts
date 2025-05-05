@@ -1,14 +1,11 @@
 import { expect, describe, it } from '@jest/globals';
 
-import reducer, { fetchIngredients } from '../services/slices/ingredientsSlice';
+import reducer, {
+  fetchIngredients,
+  initialState
+} from '../services/slices/ingredientsSlice';
 
 describe('check ingredientsSlice', () => {
-  const initial = {
-    ingredients: [],
-    loading: false,
-    error: null
-  };
-
   const bun = {
     _id: '0',
     name: 'bun',
@@ -39,13 +36,13 @@ describe('check ingredientsSlice', () => {
 
   it('should return initial state', () => {
     const newState = reducer(undefined, { type: '@@INIT' });
-    expect(newState).toEqual(initial);
+    expect(newState).toEqual(initialState);
   });
 
   it('should set loading to true on fetchIngredients.pending', () => {
     const action = { type: fetchIngredients.pending.type };
     const newState = reducer(undefined, action);
-    expect(newState).toEqual({ ...initial, loading: true });
+    expect(newState).toEqual({ ...initialState, loading: true });
   });
 
   it('should set request to false and save error on fetchIngredients.rejected', () => {
@@ -56,7 +53,11 @@ describe('check ingredientsSlice', () => {
       }
     };
     const newState = reducer(undefined, action);
-    expect(newState).toEqual({ ...initial, loading: false, error: 'error' });
+    expect(newState).toEqual({
+      ...initialState,
+      loading: false,
+      error: 'error'
+    });
   });
 
   it('should set request to false and save ingredients on fetchIngredients.fulfilled', () => {
@@ -66,7 +67,7 @@ describe('check ingredientsSlice', () => {
     };
     const newState = reducer(undefined, action);
     expect(newState).toEqual({
-      ...initial,
+      ...initialState,
       loading: false,
       ingredients: [bun, meat]
     });

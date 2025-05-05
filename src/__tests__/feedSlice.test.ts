@@ -1,18 +1,11 @@
 import { expect, describe, it } from '@jest/globals';
 
-import reducer, { fetchFeedOrders } from '../services/slices/feedSlice';
+import reducer, {
+  fetchFeedOrders,
+  initialState
+} from '../services/slices/feedSlice';
 
 describe('check feedSlice', () => {
-  const initial = {
-    feed: {
-      orders: [],
-      total: 0,
-      totalToday: 0
-    },
-    loading: false,
-    error: null
-  };
-
   const userOrder = {
     _id: '1',
     status: 'test',
@@ -25,13 +18,13 @@ describe('check feedSlice', () => {
 
   it('should return initial state', () => {
     const newState = reducer(undefined, { type: '@@INIT' });
-    expect(newState).toEqual(initial);
+    expect(newState).toEqual(initialState);
   });
 
   it('should set loading to true on fetchFeedOrders.pending', () => {
     const action = { type: fetchFeedOrders.pending.type };
     const newState = reducer(undefined, action);
-    expect(newState).toEqual({ ...initial, loading: true });
+    expect(newState).toEqual({ ...initialState, loading: true });
   });
 
   it('should set loading to false and save error on fetchFeedOrders.rejected', () => {
@@ -42,7 +35,11 @@ describe('check feedSlice', () => {
       }
     };
     const newState = reducer(undefined, action);
-    expect(newState).toEqual({ ...initial, loading: false, error: 'error' });
+    expect(newState).toEqual({
+      ...initialState,
+      loading: false,
+      error: 'error'
+    });
   });
 
   it('should set loading to false and save orders on fetchFeedOrders.fulfilled', () => {
@@ -56,7 +53,7 @@ describe('check feedSlice', () => {
     };
     const newState = reducer(undefined, action);
     expect(newState).toEqual({
-      ...initial,
+      ...initialState,
       loading: false,
       feed: { orders: [userOrder], total: 1, totalToday: 1 }
     });

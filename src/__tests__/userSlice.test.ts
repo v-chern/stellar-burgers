@@ -1,6 +1,7 @@
 import { expect, describe, it } from '@jest/globals';
 
 import reducer, {
+  initialState,
   loginUser,
   registerUser,
   getUser,
@@ -29,17 +30,6 @@ describe('check userSlice', () => {
     });
   });
 
-  const initial = {
-    user: {
-      name: '',
-      email: ''
-    },
-    orders: null,
-    isAuthenticated: false,
-    isLoading: false,
-    error: null
-  };
-
   const userPayload = {
     user: {
       name: 'test',
@@ -51,13 +41,13 @@ describe('check userSlice', () => {
 
   it('should return initial state', () => {
     const newState = reducer(undefined, { type: '@@INIT' });
-    expect(newState).toEqual(initial);
+    expect(newState).toEqual(initialState);
   });
 
   it('should set isLoading to true on loginUser.pending', () => {
     const action = { type: loginUser.pending.type };
     const newState = reducer(undefined, action);
-    expect(newState).toEqual({ ...initial, isLoading: true });
+    expect(newState).toEqual({ ...initialState, isLoading: true });
   });
 
   it('should set isLoading to false and save error on loginUser.rejected', () => {
@@ -68,7 +58,11 @@ describe('check userSlice', () => {
       }
     };
     const newState = reducer(undefined, action);
-    expect(newState).toEqual({ ...initial, isLoading: false, error: 'error' });
+    expect(newState).toEqual({
+      ...initialState,
+      isLoading: false,
+      error: 'error'
+    });
   });
 
   it('should set isLoading to false and save user on loginUser.fulfilled', () => {
@@ -78,7 +72,7 @@ describe('check userSlice', () => {
     };
     const newState = reducer(undefined, action);
     expect(newState).toEqual({
-      ...initial,
+      ...initialState,
       isLoading: false,
       isAuthenticated: true,
       user: userPayload.user
@@ -96,7 +90,7 @@ describe('check userSlice', () => {
   it('should set isLoading to true on registerUser.pending', () => {
     const action = { type: registerUser.pending.type };
     const newState = reducer(undefined, action);
-    expect(newState).toEqual({ ...initial, isLoading: true });
+    expect(newState).toEqual({ ...initialState, isLoading: true });
   });
 
   it('should set isLoading to false and save error on registerUser.rejected', () => {
@@ -107,7 +101,11 @@ describe('check userSlice', () => {
       }
     };
     const newState = reducer(undefined, action);
-    expect(newState).toEqual({ ...initial, isLoading: false, error: 'error' });
+    expect(newState).toEqual({
+      ...initialState,
+      isLoading: false,
+      error: 'error'
+    });
   });
 
   it('should set isLoading to false and save user on registerUser.fulfilled', () => {
@@ -117,7 +115,7 @@ describe('check userSlice', () => {
     };
     const newState = reducer(undefined, action);
     expect(newState).toEqual({
-      ...initial,
+      ...initialState,
       isLoading: false,
       isAuthenticated: true,
       user: userPayload.user
@@ -135,7 +133,7 @@ describe('check userSlice', () => {
   it('should set isLoading to true on getUser.pending', () => {
     const action = { type: getUser.pending.type };
     const newState = reducer(undefined, action);
-    expect(newState).toEqual({ ...initial, isLoading: true });
+    expect(newState).toEqual({ ...initialState, isLoading: true });
   });
 
   it('should set isLoading to false and save error on getUser.rejected', () => {
@@ -146,7 +144,11 @@ describe('check userSlice', () => {
       }
     };
     const newState = reducer(undefined, action);
-    expect(newState).toEqual({ ...initial, isLoading: false, error: 'error' });
+    expect(newState).toEqual({
+      ...initialState,
+      isLoading: false,
+      error: 'error'
+    });
   });
 
   it('should set isLoading to false and save user on getUser.fulfilled', () => {
@@ -156,7 +158,7 @@ describe('check userSlice', () => {
     };
     const newState = reducer(undefined, action);
     expect(newState).toEqual({
-      ...initial,
+      ...initialState,
       isLoading: false,
       isAuthenticated: true,
       user: userPayload.user
@@ -166,7 +168,7 @@ describe('check userSlice', () => {
   it('should set isLoading to true on updateUser.pending', () => {
     const action = { type: updateUser.pending.type };
     const newState = reducer(undefined, action);
-    expect(newState).toEqual({ ...initial, isLoading: true });
+    expect(newState).toEqual({ ...initialState, isLoading: true });
   });
 
   it('should set isLoading to false and save error on updateUser.rejected', () => {
@@ -177,7 +179,11 @@ describe('check userSlice', () => {
       }
     };
     const newState = reducer(undefined, action);
-    expect(newState).toEqual({ ...initial, isLoading: false, error: 'error' });
+    expect(newState).toEqual({
+      ...initialState,
+      isLoading: false,
+      error: 'error'
+    });
   });
 
   it('should set isLoading to false and save user on updateUser.fulfilled', () => {
@@ -187,7 +193,7 @@ describe('check userSlice', () => {
     };
     const newState = reducer(undefined, action);
     expect(newState).toEqual({
-      ...initial,
+      ...initialState,
       isLoading: false,
       isAuthenticated: true,
       user: userPayload.user
@@ -197,7 +203,7 @@ describe('check userSlice', () => {
   it('should set isLoading to true on getUserOrders.pending', () => {
     const action = { type: getUserOrders.pending.type };
     const newState = reducer(undefined, action);
-    expect(newState).toEqual({ ...initial, isLoading: true });
+    expect(newState).toEqual({ ...initialState, isLoading: true });
   });
 
   it('should set isLoading to false and save error on getUserOrders.rejected', () => {
@@ -208,7 +214,11 @@ describe('check userSlice', () => {
       }
     };
     const newState = reducer(undefined, action);
-    expect(newState).toEqual({ ...initial, isLoading: false, error: 'error' });
+    expect(newState).toEqual({
+      ...initialState,
+      isLoading: false,
+      error: 'error'
+    });
   });
 
   it('should set isLoading to false and save orders on getUserOrders.fulfilled', () => {
@@ -228,7 +238,7 @@ describe('check userSlice', () => {
     };
     const newState = reducer(undefined, action);
     expect(newState).toEqual({
-      ...initial,
+      ...initialState,
       isLoading: false,
       orders: action.payload
     });
@@ -237,7 +247,7 @@ describe('check userSlice', () => {
   it('should set isLoading to true on logoutUser.pending', () => {
     const action = { type: logoutUser.pending.type };
     const newState = reducer(undefined, action);
-    expect(newState).toEqual({ ...initial, isLoading: true });
+    expect(newState).toEqual({ ...initialState, isLoading: true });
   });
 
   it('should set isLoading to false and save error on logoutUser.rejected', () => {
@@ -247,9 +257,12 @@ describe('check userSlice', () => {
         message: 'error'
       }
     };
-    const newState = reducer({ ...initial, isAuthenticated: true }, action);
+    const newState = reducer(
+      { ...initialState, isAuthenticated: true },
+      action
+    );
     expect(newState).toEqual({
-      ...initial,
+      ...initialState,
       isLoading: false,
       isAuthenticated: false,
       error: 'error'
@@ -258,9 +271,12 @@ describe('check userSlice', () => {
 
   it('should set isLoading to false and save user on logoutUser.fulfilled', () => {
     const action = { type: logoutUser.fulfilled.type };
-    const newState = reducer({ ...initial, isAuthenticated: true }, action);
+    const newState = reducer(
+      { ...initialState, isAuthenticated: true },
+      action
+    );
     expect(newState).toEqual({
-      ...initial,
+      ...initialState,
       isLoading: false,
       isAuthenticated: false
     });

@@ -14,7 +14,7 @@ interface UserOrderState {
   error: string | null;
 }
 
-const initialState: UserOrderState = {
+export const initialState: UserOrderState = {
   bun: null,
   ingredients: [],
   request: false,

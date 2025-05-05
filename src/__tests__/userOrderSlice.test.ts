@@ -1,15 +1,13 @@
 import { expect, describe, it } from '@jest/globals';
 
 import reducer, {
+  initialState,
   addIngredient,
   moveIngredientUp,
   moveIngredientDown,
   removeIngredient,
-  clearUserOrder,
   placeOrder
 } from '../services/slices/userOrderSlice';
-
-import { TIngredient, TConstructorIngredient } from '@utils-types';
 
 jest.mock('@reduxjs/toolkit', () => {
   const actual = jest.requireActual('@reduxjs/toolkit');
@@ -23,14 +21,6 @@ describe('check userOrderSlice actions', () => {
   afterAll(() => {
     jest.resetAllMocks();
   });
-
-  const initial = {
-    bun: null,
-    ingredients: [],
-    request: false,
-    order: null,
-    error: null
-  };
 
   const bun = {
     _id: '0',
@@ -86,7 +76,7 @@ describe('check userOrderSlice actions', () => {
 
   it('should return initial state', () => {
     const newState = reducer(undefined, { type: '@@INIT' });
-    expect(newState).toEqual(initial);
+    expect(newState).toEqual(initialState);
   });
 
   it('should add bun to ingredients', () => {
@@ -101,7 +91,7 @@ describe('check userOrderSlice actions', () => {
 
   it('should move ingredient up', () => {
     const state = {
-      ...initial,
+      ...initialState,
       ingredients: [
         { ...meat, id: '0' },
         { ...sauce, id: '1' }
@@ -116,7 +106,7 @@ describe('check userOrderSlice actions', () => {
 
   it('should move ingredient down', () => {
     const state = {
-      ...initial,
+      ...initialState,
       ingredients: [
         { ...meat, id: '0' },
         { ...sauce, id: '1' }
@@ -131,7 +121,7 @@ describe('check userOrderSlice actions', () => {
 
   it('should remove ingredient', () => {
     const state = {
-      ...initial,
+      ...initialState,
       ingredients: [
         { ...meat, id: '0' },
         { ...sauce, id: '1' }
@@ -144,7 +134,7 @@ describe('check userOrderSlice actions', () => {
   it('should set request to true on placeOrder.pending', () => {
     const action = { type: placeOrder.pending.type };
     const newState = reducer(undefined, action);
-    expect(newState).toEqual({ ...initial, request: true });
+    expect(newState).toEqual({ ...initialState, request: true });
   });
 
   it('should set request to false and save error on placeOrder.rejected', () => {
@@ -155,7 +145,11 @@ describe('check userOrderSlice actions', () => {
       }
     };
     const newState = reducer(undefined, action);
-    expect(newState).toEqual({ ...initial, request: false, error: 'error' });
+    expect(newState).toEqual({
+      ...initialState,
+      request: false,
+      error: 'error'
+    });
   });
 
   it('should set request to false and save order on placeOrder.fulfilled', () => {
@@ -166,6 +160,10 @@ describe('check userOrderSlice actions', () => {
       }
     };
     const newState = reducer(undefined, action);
-    expect(newState).toEqual({ ...initial, request: false, order: userOrder });
+    expect(newState).toEqual({
+      ...initialState,
+      request: false,
+      order: userOrder
+    });
   });
 });
