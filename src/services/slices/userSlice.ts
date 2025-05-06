@@ -10,7 +10,7 @@ import {
   getOrdersApi
 } from '@api';
 import { TOrder, TUser } from '@utils-types';
-import { setCookie } from '../../utils/cookie';
+import { setCookie, deleteCookie } from '../../utils/cookie';
 
 interface UserState {
   user: TUser;
@@ -20,7 +20,7 @@ interface UserState {
   error: string | null | undefined;
 }
 
-const initialState: UserState = {
+export const initialState: UserState = {
   user: {
     name: '',
     email: ''
@@ -128,6 +128,7 @@ const userSlice = createSlice({
       .addCase(getUser.rejected, (state, action) => {
         state.isLoading = false;
         state.isAuthenticated = false;
+        state.error = action.error.message;
       })
       .addCase(getUser.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -141,10 +142,11 @@ const userSlice = createSlice({
       })
       .addCase(updateUser.rejected, (state, action) => {
         state.isLoading = false;
+        state.error = action.error.message;
       })
       .addCase(updateUser.fulfilled, (state, action) => {
         state.isLoading = false;
-        //state.isAuthenticated = true;
+        state.isAuthenticated = true;
         state.user = action.payload.user;
         state.error = null;
       })
@@ -154,6 +156,7 @@ const userSlice = createSlice({
       })
       .addCase(getUserOrders.rejected, (state, action) => {
         state.isLoading = false;
+        state.error = action.error.message;
       })
       .addCase(getUserOrders.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -177,7 +180,7 @@ const userSlice = createSlice({
           email: ''
         };
         state.error = null;
-        setCookie('accessToken', '', { expires: -1 });
+        deleteCookie('accessToken');
         localStorage.clear();
       });
   }

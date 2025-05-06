@@ -14,7 +14,7 @@ interface UserOrderState {
   error: string | null;
 }
 
-const initialState: UserOrderState = {
+export const initialState: UserOrderState = {
   bun: null,
   ingredients: [],
   request: false,
@@ -106,6 +106,7 @@ const userOrderSlice = createSlice({
       })
       .addCase(placeOrder.rejected, (state, action) => {
         state.request = false;
+        state.error = action.error.message || 'Unknown';
       })
       .addCase(placeOrder.fulfilled, (state, action) => {
         state.request = false;

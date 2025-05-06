@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { getIngredientsApi } from '@api';
 import { TIngredient } from '@utils-types';
-import { act } from 'react-dom/test-utils';
 
 interface IngredientsState {
   ingredients: TIngredient[];
@@ -9,7 +8,7 @@ interface IngredientsState {
   error: string | null | undefined;
 }
 
-const initialState: IngredientsState = {
+export const initialState: IngredientsState = {
   ingredients: [],
   loading: false,
   error: null
